@@ -1,6 +1,7 @@
-IMAGE_NAME := local/rockylinux_java
-TAG := 9.3.0
+IMAGE_NAME := rockylinux_minecraft_server
+TAG := 9.3.1.21
 CONTAINER_NAME := $(shell echo test_run_${IMAGE_NAME}_${TAG} | sed -e s/\\//_/g)
+IMAGE_FILE_NAME := rockylinux_minecraft_server_${TAG}.tar
 
 ContainerExists = "$(shell docker ps | grep ${CONTAINER_NAME})"
 
@@ -9,6 +10,7 @@ help:
 	@echo ""
 	@echo "  TARGETS"
 	@echo "    build ... Build docker image ${IMAGE_NAME}"
+	@echo "    save  ... Save docker image ${IMAGE_NAME}"
 	@echo "    clean ... Clean docker image ${IMAGE_NAME}"
 	@echo "    run   ... Run docker container using image ${IMAGE_NAME}"
 	@echo "    stop  ... Stop docker container which was created by run target"
@@ -17,6 +19,10 @@ help:
 .PHONY: build
 build: Dockerfile
 	docker build --rm -t ${IMAGE_NAME}:${TAG} .
+
+.PHONY: save
+save:
+	docker save -o ${IMAGE_FILE_NAME} ${IMAGE_NAME}:${TAG}
 
 .PHONY: clean
 clean: stop
