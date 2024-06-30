@@ -1,0 +1,38 @@
+name: Release
+
+# when tag '*.*.*.*' is pushed
+on:
+  push:
+    tags:
+      - "*.*.*.*"
+
+jobs:
+  check-tag-version:
+    step:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check tag name
+        run: test `echo ${{ github.ref }}` = `grep 'TAG :=' Makefile | cut -d ' ' -f 3`
+
+  release:
+    needs: check-tag-version
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Zip release asset
+        run: |
+          zip -r rockylinux_minecraft_server_${{ github.ref }}.tar.zip rockylinux_minecraft_server_${{ github.ref }}.tar
+
+      - name: Create Release
+        run: |
+          tag_name=$(echo ${{ github.ref }})
+          echo "{ \"tag_name\": \"$tag_name\", \"prerelease\": true }" > ./request_body
+          curl \
+          $GITHUB_API_URL/repos/$GITHUB_REPOSITORY/releases \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d @request_body \
+          > ./response_body

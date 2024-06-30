@@ -10,7 +10,7 @@ help:
 	@echo ""
 	@echo "  TARGETS"
 	@echo "    build ... Build docker image ${IMAGE_NAME}"
-	@echo "    save  ... Save docker image ${IMAGE_NAME}"
+	@echo "    save  ... Save docker image ${IMAGE_NAME}" to file.
 	@echo "    clean ... Clean docker image ${IMAGE_NAME}"
 	@echo "    run   ... Run docker container using image ${IMAGE_NAME}"
 	@echo "    stop  ... Stop docker container which was created by run target"
