@@ -26,7 +26,7 @@ jobs:
       - name: Zip release asset
         run: |
           tag_name=`grep 'TAG :=' Makefile | cut -d ' ' -f 3`
-          zip -r rockylinux_minecraft_server_$tag_name.tar.zip rockylinux_minecraft_server_$tag_name.tar
+          gzip rockylinux_minecraft_server_$tag_name.tar
 
       - name: Create Release
         run: |
