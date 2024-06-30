@@ -43,6 +43,4 @@ jobs:
           -X POST \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -d @request_body \
-          > ./response_body
-          cat response_body
+          -d @request_body
