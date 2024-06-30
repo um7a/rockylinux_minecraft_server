@@ -8,7 +8,7 @@ on:
 
 jobs:
   check-tag-version:
-    step:
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
 
