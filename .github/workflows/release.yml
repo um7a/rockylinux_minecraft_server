@@ -37,7 +37,7 @@ jobs:
       - name: Create Release
         run: |
           tag_name=`grep 'TAG :=' Makefile | cut -d ' ' -f 3`
-          echo "{ \"tag_name\": \"$tag_name\", \"prerelease\": true }" > ./request_body
+          echo "{ \"tag_name\": \"$tag_name\", \"prerelease\": true, \"body\": \"Test Release\" }" > ./request_body
           curl \
           $GITHUB_API_URL/repos/$GITHUB_REPOSITORY/releases \
           -X POST \
